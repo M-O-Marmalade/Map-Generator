@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RenoiseScriptingTool doc_version="0">
+  <Name>MapGenerator</Name>
+  <Id>mom.MOMarmalade.MapGenerator</Id>
+  <Version>1.0</Version>
+  <ApiVersion>6.1</ApiVersion>
+  <Author>MOMarmalade [xephyrpanda@yahoo.com]</Author>
+  <Category>Test</Category>
+  <Description>Generate procedural tilemaps</Description>
+  <Homepage>https://www.aqu.surf</Homepage>
+  <Platform/>
+  <Icon/>
+</RenoiseScriptingTool>
