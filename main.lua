@@ -25,14 +25,14 @@ local function show_window()
         vb:button {
           text = "Generate Map",
           notifier = function ()
-            math.randomseed(math.floor(os.clock()))
             if map_view then vb.views.map_column:remove_child( map_view ) end
             map_view = map_generator_to_renoise.request_map( 
               vb, 
               vb.views.x_size_box.value, 
               vb.views.y_size_box.value, 
               {rivers=true, sea=true, roads=true, cities=true}, 
-              "bitmaps/"
+              "bitmaps/",
+              math.floor(os.clock())
             )
             vb.views.map_column:add_child( map_view )
           end

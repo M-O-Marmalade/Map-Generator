@@ -1,6 +1,6 @@
 local M = {}
 
-function M.generate_map(x_size, y_size, options)
+function M.generate_map(x_size, y_size, options, seed)
     --map is indexed as map[x][y] with origin [1][1] at bottom-left
     --options are... rivers, sea, roads, and cities
     --tiles are...
@@ -26,9 +26,17 @@ function M.generate_map(x_size, y_size, options)
     -- "bridge_v", 
     -- "city"
     
-    local river_x = 1 + math.random(x_size - 2)
-    local river_y = 1 + math.random(y_size - 2)
-    local sea_size = math.floor(y_size/6) + math.random(math.floor(y_size/3))
+    math.randomseed(seed)
+    math.random()
+    math.random()
+    math.random()
+    math.random()
+    math.random()
+    math.random()
+    math.random()
+    local sea_size = math.random(math.min(math.floor(y_size/3), 7), math.floor(y_size/2))
+    local river_x = math.random(3, x_size - 3)
+    local river_y = math.random(sea_size+3, y_size-3)
     local road_x
     local road_y
     for i = 1, 300 do
@@ -46,9 +54,10 @@ function M.generate_map(x_size, y_size, options)
             options.roads = false
         end
     end
+    local city_y = math.floor(math.random(1,road_y-1))
     
-
-
+    
+    
     --initialize map data structure
     local map = {}
     for x = 1, x_size do
@@ -124,7 +133,6 @@ function M.generate_map(x_size, y_size, options)
     end
 
     if options.roads then
-
         for x = 1, x_size do
             if math.abs(x - river_x) < 2 then
                 map[x][road_y] = "bridge_h"
@@ -134,13 +142,13 @@ function M.generate_map(x_size, y_size, options)
         end
 
         if options.cities then
-            map[road_x][sea_size + 2] = "city"
+            map[road_x][city_y] = "city"
         end
 
-        for y = sea_size + 3, y_size do
+        for y = city_y+1, y_size do
             if y == road_y then
                 map[road_x][y] = "road_cross"
-            elseif math.abs(y - river_y) < 2 then
+            elseif math.abs(y - river_y) < 2 or y < sea_size-1 then
                 map[road_x][y] = "bridge_v"
             else
                 map[road_x][y] = "road_v"
