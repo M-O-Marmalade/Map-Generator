@@ -17,14 +17,17 @@ function M.generate_map(x_size, y_size, options, seed)
     -- "river_top_right",
     -- "river_bottom_left",
     -- "river_bottom_right",
-    -- "river_sand_left",
-    -- "river_sand_right",
     -- "road_h", 
     -- "road_v", 
     -- "road_cross", 
     -- "bridge_h", 
     -- "bridge_v", 
-    -- "city"
+    -- "city_grass"
+    -- "city_sand",
+    -- "city_water",
+    -- "city_water_deep",
+    -- "city_water_shallow"
+    
     
     math.randomseed(seed)
     math.random()
@@ -110,19 +113,15 @@ function M.generate_map(x_size, y_size, options, seed)
 
             for x = 1, x_size do
                 if water_type == "sand" then
-                    if x == river_x - 1 then
-                        map[x][y] = "river_sand_left"
-                    elseif x == river_x + 1 then
-                        map[x][y] = "river_sand_right"
-                    elseif x ~= river_x then
+                    if math.abs(river_x - x) <= 1 then
+                        map[x][y] = "water"
+                    else
                         map[x][y] = "sand"
                     end
                 elseif water_type == "water_shallow" then
-                    if x == river_x - 1 then
-                        map[x][y] = "water_shallow_left"
-                    elseif x == river_x + 1 then
-                        map[x][y] = "water_shallow_right"
-                    elseif x ~= river_x then
+                    if math.abs(river_x - x) then
+                        map[x][y] = "water"
+                    else
                         map[x][y] = "water_shallow"
                     end
                 else
@@ -142,7 +141,13 @@ function M.generate_map(x_size, y_size, options, seed)
         end
 
         if options.cities then
-            map[road_x][city_y] = "city"
+            if map[road_x][city_y] == "grass" then map[road_x][city_y] = "city_grass"
+            elseif map[road_x][city_y] == "sand" then map[road_x][city_y] = "city_sand"
+            elseif map[road_x][city_y] == "water" or string.find(map[road_x][city_y], "river") then map[road_x][city_y] = "city_water"
+            elseif map[road_x][city_y] == "water_deep" then map[road_x][city_y] = "city_water_deep"
+            elseif map[road_x][city_y] == "water_shallow" then map[road_x][city_y] = "city_water_shallow"
+            else map[road_x][city_y] = "city_grass"
+            end            
         end
 
         for y = city_y+1, y_size do

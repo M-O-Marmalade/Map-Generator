@@ -44,7 +44,7 @@ local function show_window()
 
         vb:valuebox {
           id = "x_size_box",
-          value = 24
+          value = 20
         },
 
         vb:text {
@@ -53,7 +53,7 @@ local function show_window()
   
         vb:valuebox {
           id = "y_size_box",
-          value = 24
+          value = 20
         }
       }
     }
