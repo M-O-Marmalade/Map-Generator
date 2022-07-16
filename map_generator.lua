@@ -3,30 +3,37 @@ local M = {}
 function M.generate_map(x_size, y_size, options, seed)
     --map is indexed as map[x][y] with origin [1][1] at bottom-left
     --options are... rivers, sea, roads, and cities
-    --tiles are...
-    -- "grass", 
-    -- "water", 
-    -- "water_deep", 
-    -- "water_shallow", 
-    -- "sand", 
-    -- "river_left",
-    -- "river_right",
-    -- "river_top",
-    -- "river_bottom",
-    -- "river_top_left",
-    -- "river_top_right",
-    -- "river_bottom_left",
-    -- "river_bottom_right",
-    -- "road_h", 
-    -- "road_v", 
-    -- "road_cross", 
-    -- "bridge_h", 
-    -- "bridge_v", 
-    -- "city_grass"
-    -- "city_sand",
-    -- "city_water",
-    -- "city_water_deep",
-    -- "city_water_shallow"
+
+    local tiles = {
+        [1] = "grass",
+        [2] = "flowers",
+        [3] = "tree",
+
+        [4] = "sand",
+        [5] = "water",
+        [6] = "water_deep",
+        [7] = "water_shallow",
+        [8] = "river_left",
+        [9] = "river_right",
+        [10] = "river_top",
+        [11] = "river_bottom",
+        [12] = "river_top_left",
+        [13] = "river_top_right",
+        [14] = "river_bottom_left",
+        [15] = "river_bottom_right",
+
+        [16] = "road_h",
+        [17] = "road_v",
+        [18] = "road_cross",
+        [19] = "bridge_h",
+        [20] = "bridge_v",
+
+        [21] = "city_grass",
+        [22] = "city_sand",
+        [23] = "city_water",
+        [24] = "city_water_deep",
+        [25] = "city_water_shallow"
+    }
     
     
     math.randomseed(seed)
@@ -59,18 +66,46 @@ function M.generate_map(x_size, y_size, options, seed)
     end
     local city_y = math.floor(math.random(1,road_y-1))
     
-    
-    
+
     --initialize map data structure
     local map = {}
     for x = 1, x_size do
         if not map[x] then map[x] = {} end
     end
     
-    --fill map with grass
+    --fill map with grass, flowers, and trees
+    local terrainEnum = {1, 2, 3}   --1 = grass, 2 = flowers, and 3 = tree in tiles{}
     for x = 1, x_size do
         for y = 1, y_size do
-            map[x][y] = "grass"
+
+            map[x][y] = tiles[1]
+
+            local chanceForMeadow = math.random(1,20)
+            if chanceForMeadow == 1 then
+                
+                local meadowStartX = math.max(1, x - math.random(1,4))
+                local meadowEndX = math.min(x_size, math.random(meadowStartX, meadowStartX + 8))
+                local meadowStartY = math.max(1, y - math.random(1,4))
+                local meadowEndY = math.min(y_size, math.random(meadowStartY, meadowStartY + 8))
+                
+                for mx = meadowStartX, meadowEndX do
+                    for my = meadowStartY, meadowEndY do
+                        
+                        local chanceForFlowerInMeadow = math.random(1,4)
+                        if chanceForFlowerInMeadow == 1 then
+                            map[mx][my] = tiles[2]
+                        end
+
+                    end
+                end
+
+            end
+
+            local chanceForTree = math.random(1,7)
+            if chanceForTree == 1 then
+                map[x][y] = tiles[3]
+            end
+
         end
     end
     
@@ -116,10 +151,15 @@ function M.generate_map(x_size, y_size, options, seed)
                     if math.abs(river_x - x) <= 1 then
                         map[x][y] = "water"
                     else
-                        map[x][y] = "sand"
+                        local chanceForPalm = math.random(1,25)
+                        if chanceForPalm == 1 then
+                            map[x][y] = "palm"
+                        else
+                            map[x][y] = "sand"
+                        end
                     end
                 elseif water_type == "water_shallow" then
-                    if math.abs(river_x - x) then
+                    if math.abs(river_x - x) <= 1 then
                         map[x][y] = "water"
                     else
                         map[x][y] = "water_shallow"
@@ -147,7 +187,7 @@ function M.generate_map(x_size, y_size, options, seed)
             elseif map[road_x][city_y] == "water_deep" then map[road_x][city_y] = "city_water_deep"
             elseif map[road_x][city_y] == "water_shallow" then map[road_x][city_y] = "city_water_shallow"
             else map[road_x][city_y] = "city_grass"
-            end            
+            end
         end
 
         for y = city_y+1, y_size do
