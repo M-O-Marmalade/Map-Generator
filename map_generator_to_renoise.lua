@@ -1,7 +1,7 @@
 local map_generator = require("map_generator")
 local M = {}
 
-function M.request_map(vb, x_size, y_size, options, bitmaps_path_prefix, seed)
+function M.request_map(vb, x_size, y_size, options, tiles, seed)
     local map = map_generator.generate_map(x_size, y_size, options, seed)
 
     local renoise_map = vb:row{}
@@ -10,7 +10,7 @@ function M.request_map(vb, x_size, y_size, options, bitmaps_path_prefix, seed)
         for y = 0, y_size-1 do
             map_column:add_child(
                 vb:bitmap {
-                    bitmap = bitmaps_path_prefix .. map[x][y_size - y] .. ".bmp"
+                    bitmap = tiles.path_prefix .. map[x][y_size - y] .. ".bmp"
                 }
             )
         end

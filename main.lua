@@ -10,6 +10,8 @@ local window = {
 local map_generator_to_renoise = require("map_generator_to_renoise")
 local map_view = nil;
 
+local tiles = require("tiles")
+
 local function show_window()
 
   --prepare the window content if it hasn't been done yet
@@ -30,9 +32,9 @@ local function show_window()
               vb, 
               vb.views.x_size_box.value, 
               vb.views.y_size_box.value, 
-              {rivers=true, sea=true, roads=true, cities=true}, 
-              "bitmaps/",
-              math.floor(os.clock())
+              {rivers=true, sea=true, roads=true, settlements=true}, 
+              tiles,
+              math.floor(os.clock() * 100)
             )
             vb.views.map_column:add_child( map_view )
           end
