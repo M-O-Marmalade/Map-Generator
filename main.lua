@@ -91,7 +91,6 @@ local function show_window()
               map_y_size,
               tiles,
               map_options,
-              tiles,
               math.floor(os.clock() * 100)
             )
             vb.views.map_column:add_child( map_view )

@@ -11,10 +11,10 @@ local M = {}
 
 function M.requestMap(map_x_size, map_y_size, tiles, options, seed)
     -- map is indexed as map[x][y] with origin [1][1] at bottom-left
-    -- each index of the map is an index of the table provided by tiles.lua
-    -- each index of tiles.lua is a string corresponding to a tile filename (without the filetype extension)
+    -- each index of the map is a string provided by tiles.lua
+    -- each string in tiles.lua corresponds to a tile's filename (without the filetype extension)
     
-    -- options that can be passed to generate_map() are... 
+    -- options that can be passed to requestMap() are... 
     -- (indented options are required if their parent boolean option is true)
     --
     --   trees ... (boolean)
