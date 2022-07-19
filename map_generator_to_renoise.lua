@@ -1,8 +1,8 @@
 local map_generator = require("map_generator")
 local M = {}
 
-function M.request_map(vb, x_size, y_size, options, tiles, seed)
-    local map = map_generator.generate_map(x_size, y_size, options, seed)
+function M.requestMap(vb, x_size, y_size, tiles, options, tiles, seed)
+    local map = map_generator.requestMap(x_size, y_size, tiles, options, seed)
 
     local renoise_map = vb:row{}
     for x = 1, x_size do

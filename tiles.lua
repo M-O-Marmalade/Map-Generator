@@ -2,7 +2,14 @@ local tiles = {
     path_prefix = "bitmaps/",
 
     grass = "grass",
-    grass_flowers = "grass_flowers",
+    grass_flowers = {
+        "grass_flowers",
+        "grass_flower_red",
+        "grass_flower_yellow",
+        "grass_flower_blue",
+        "grass_flower_white",
+        "grass_flower_pink",
+    },
     grass_tree = "grass_tree",
     sand = "sand",
     sand_palm = "sand_palm",
