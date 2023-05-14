@@ -1,3 +1,3 @@
-# Easy Games Assessment - Map Generator
+2D TileMap Generator
 
-A [Renoise](https://www.renoise.com/products/renoise) tool to generate procedrual tilemaps.
+A [Renoise](https://www.renoise.com/products/renoise) tool to generate simple procedrual tilemaps.
