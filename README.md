@@ -2,6 +2,8 @@
 
 A [Renoise](https://www.renoise.com/products/renoise) tool to generate simple procedrual tilemaps.
 
+![Map-Gen Demo](Artwork/map-gen-demo.apng)
+
 ## Installation
 1. Download the .xrnx file from the [latest release](https://github.com/M-O-Marmalade/Map-Generator/releases/latest).
 2. [Install Renoise](https://www.renoise.com/download) if you don't already have it.
